@@ -18,7 +18,6 @@ public class MenuPrincipal {
         if (compteManager.authentifier(email, motDePasse)) {
             // L'utilisateur est authentifié
             int choix;
-
             do {
                 afficherMenu();
                 System.out.print("Faites votre choix : ");
@@ -118,6 +117,15 @@ public class MenuPrincipal {
     }
 
     private static void rechercherPersonne(Scanner scanner) {
+    	
+        System.out.println("   A. Par nom");
+        System.out.println("   B. Par amail");
+        System.out.println("   C. Par profil");
+
+        String choix =  scanner.nextLine();
+        scanner.nextLine();
+        
+        annuaire.afficherResultatsRecherche(choix);
 
     }
 
