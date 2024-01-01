@@ -2,42 +2,56 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
 	
-	private CompteManager compteManager;
+	private static CompteManager compteManager = new CompteManager();
 	private static Annuaire annuaire = new Annuaire();
 
 	public static void main(String[] args) {
 		
         Scanner scanner = new Scanner(System.in);
-        int choix;
+        System.out.print("Email : ");
+        String email = scanner.nextLine();
 
-        do {
-            afficherMenu();
-            System.out.print("Faites votre choix : ");
-            choix = scanner.nextInt();
-            scanner.nextLine(); 
+        System.out.print("Mot de passe : ");
+        String motDePasse = scanner.nextLine();
 
-            switch (choix) {
-                case 1:
-                    ajouterPersonne(scanner);
-                    break;
-                case 2:
-                    rechercherPersonne(scanner);
-                    break;
-                case 3:
-                    modifierInformationsPersonnelles(scanner);
-                    break;
-                case 0:
-                    System.out.println("Au revoir !");
-                    break;
-                default:
-                    System.out.println("Choix invalide. Veuillez réessayer.");
-            }
+        // Authentification
+        if (compteManager.authentifier(email, motDePasse)) {
+            // L'utilisateur est authentifié
+            int choix;
 
-        } while (choix != 0);
+            do {
+                afficherMenu();
+                System.out.print("Faites votre choix : ");
+                choix = scanner.nextInt();
+                scanner.nextLine(); 
 
-        scanner.close();
+                switch (choix) {
+                    case 1:
+                        ajouterPersonne(scanner);
+                        break;
+                    case 2:
+                        rechercherPersonne(scanner);
+                        break;
+                    case 3:
+                        modifierInformationsPersonnelles(scanner);
+                        break;
+                    case 0:
+                        System.out.println("Au revoir !");
+                        break;
+                    default:
+                        System.out.println("Choix invalide. Veuillez réessayer.");
+                }
+
+            } while (choix != 0);
+
+            scanner.close();
+
+        } else {
+            System.out.println("Echec de l'authentification. Vérifiez vos informations.");
+        }
 
 	}
+	
     private static void afficherMenu() {
         System.out.println("Bienvenue dans l’Annuaire NFA032");
         System.out.println("Administrateur :");
@@ -54,7 +68,6 @@ public class MenuPrincipal {
     }
 
     private static void ajouterPersonne(Scanner scanner) {
-       System.out.println("Add");
        
        System.out.println("Veuillez saisir le nom : ");
        String nom = scanner.nextLine();
@@ -71,19 +84,45 @@ public class MenuPrincipal {
        System.out.println("Veuillez saisir la date de naissance : ");
        String dateNaissance = scanner.nextLine();
        
-       annuaire.getPersonnes().add(new Personne(nom, prenom, email, adresse, dateNaissance, null, null, null));
-       annuaire.sauvegarderAnnuaire("AnnuaireNFA.txt");
-       System.out.println("Fichier Créer");
+       System.out.println("   A. Ajouter un Admin");
+       System.out.println("   B. Ajouter un particulier");
+
+       String choix =  scanner.nextLine();
+       scanner.nextLine();
+       if(choix.equals("A")) {
+	        // Vérifier si le compte existe déjà
+	        if (!compteManager.compteExiste(email)) {
+	            System.out.println("Veuillez saisir un mot de passe : ");
+	            String mdp = scanner.nextLine();
+	     	    compteManager.ajouterAdministrateur(email, mdp);
+	            annuaire.getPersonnes().add(new Personne(nom, prenom, email, adresse, dateNaissance, null, null, null));
+	            annuaire.sauvegarderAnnuaire();
+	            System.out.println("Fichier Créer");  
+	        } else {
+	            System.out.println("Echec : Un compte avec cet email existe déjà.");
+	        }
+       }
+       if(choix.equals("B")) {
+	        // Vérifier si le compte existe déjà
+	        if (!compteManager.compteExiste(email)) {
+	            System.out.println("Veuillez saisir un mot de passe : ");
+	            String mdp = scanner.nextLine();
+	     	    compteManager.ajouterParticulier(email, mdp);
+	            annuaire.getPersonnes().add(new Personne(nom, prenom, email, adresse, dateNaissance, null, null, null));
+	            annuaire.sauvegarderAnnuaire();
+	            System.out.println("Fichier Créer");  
+	        } else {
+	            System.out.println("Echec : Un compte avec cet email existe déjà.");
+	        }
+      }
     }
 
     private static void rechercherPersonne(Scanner scanner) {
-        // Ajoutez le code pour gérer la recherche de particuliers
-        System.out.println("Fonctionnalité non implémentée.");
+
     }
 
     private static void modifierInformationsPersonnelles(Scanner scanner) {
-        // Ajoutez le code pour gérer la modification des informations personnelles
-        System.out.println("Fonctionnalité non implémentée.");
+
     }
    
 }
