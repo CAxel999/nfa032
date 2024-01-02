@@ -1,0 +1,2 @@
+Test;Essaie;test2@cnam.fr;le même endroit;un moment subséquent mais pas tant que ça;auditeur;2024-01-02;2024-01-02
+Test;Test;test@cnam.fr;quelque part;un certain moment;auditeur;2024-01-02;2024-01-02

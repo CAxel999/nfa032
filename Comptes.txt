@@ -1,0 +1,3 @@
+AdminPrincipale@cnam.fr;motdepasseprincipale;admin
+test@cnam.fr;motdepassetest;user
+test2@cnam.fr;secondmotdepassetest;user
