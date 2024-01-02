@@ -133,7 +133,6 @@ public class Application {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Bonjour");
 
         Application application = new Application();
         Datejour datejour = new Datejour();
