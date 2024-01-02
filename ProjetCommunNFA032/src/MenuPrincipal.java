@@ -32,7 +32,7 @@ public class MenuPrincipal {
                         rechercherPersonne(scanner);
                         break;
                     case 3:
-                        modifierInformationsPersonnelles(scanner);
+                        annuaire.modifierParticulier(email);
                         break;
                     case 0:
                         System.out.println("Au revoir !");

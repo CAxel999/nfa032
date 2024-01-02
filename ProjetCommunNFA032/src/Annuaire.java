@@ -38,7 +38,7 @@ public class Annuaire {
                         personne.getDateMaj() + "\n");
             }
 	    } catch (FileNotFoundException e) {
-	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier...");
+	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier Annuaire.");
 	        creerFichierComptes();
 	        chargerAnnuaire(); // Essayez de charger à nouveau après la création du fichier
 
@@ -71,14 +71,14 @@ public class Annuaire {
                 String[] elements = ligne.split(";");
                 
                 // Extraire les informations nécessaires du tableau d'éléments
-                String nom = elements[2];
-                String prenom = elements[3];
-                String email = elements[4];
-                String adressePostale = elements[5];
-                String dateNaissance = elements[6];
-                String profil = elements[7];
-                String dateAjout = elements[8];
-                String dateMaj = elements[9];
+                String nom = elements[0];
+                String prenom = elements[1];
+                String email = elements[2];
+                String adressePostale = elements[3];
+                String dateNaissance = elements[4];
+                String profil = elements[5];
+                String dateAjout = elements[6];
+                String dateMaj = elements[7];
                 
                 // Créer un objet Particulier avec les informations extraites
                 Personne personne = new Personne(nom, prenom, email, adressePostale, dateNaissance, profil, dateAjout, dateMaj);
@@ -87,9 +87,8 @@ public class Annuaire {
                 annuaires.add(personne);
             }
 	    } catch (FileNotFoundException e) {
-	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier...");
+	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier Annuaire.");
 	        creerFichierComptes();
-	        //charger(); // Essayez de charger à nouveau après la création du fichier
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -244,6 +243,91 @@ public class Annuaire {
             System.out.println("Résultat de la recherche :");
             System.out.println("Nom : "+resultat.getNom()+" Prenom : "+resultat.getPrenom()+" Email : "+resultat.getEmail()); // Supposant que Particulier a une méthode toString appropriée
 
+        }
+    }
+    
+    public void modifierParticulier(String email) {
+        chargerAnnuaire(); // Charger l'annuaire depuis le fichier
+
+        Personne particulierAModifier = rechercherParEmail(email);
+
+        if (particulierAModifier != null) {
+            // Demander les champs à modifier
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Quels champs souhaitez-vous modifier ?");
+
+            int choix;
+            do {
+                afficherMenuModifier();
+                choix = scanner.nextInt();
+
+                switch (choix) {
+                    case 1:
+                        modifierChamp(particulierAModifier, "Nom", scanner);
+                        break;
+                    case 2:
+                        modifierChamp(particulierAModifier, "Prénom", scanner);
+                        break;
+                    case 3:
+                        modifierChamp(particulierAModifier, "Email", scanner);
+                        break;
+                    case 4:
+                        modifierChamp(particulierAModifier, "Adresse postale", scanner);
+                        break;
+                    case 5:
+                        modifierChamp(particulierAModifier, "Date de naissance", scanner);
+                        break;
+                    case 6:
+                        modifierChamp(particulierAModifier, "Profil", scanner);
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.out.println("Choix invalide. Veuillez réessayer.");
+                }
+            } while (choix != 0);
+
+            sauvegarderAnnuaire(); // Sauvegarder les modifications dans le fichier annuaire
+            System.out.println("Particulier modifié avec succès.");
+        } else {
+            System.out.println("Echec : Aucun particulier trouvé avec cet email.");
+        }
+    }
+
+    private void afficherMenuModifier() {
+        System.out.println("1. Modifier le nom");
+        System.out.println("2. Modifier le prénom");
+        System.out.println("3. Modifier l'email");
+        System.out.println("4. Modifier l'adresse postale");
+        System.out.println("5. Modifier la date de naissance");
+        System.out.println("6. Modifier le profil");
+        System.out.println("0. Quitter");
+    }
+
+    private void modifierChamp(Personne particulier, String nomChamp, Scanner scanner) {
+        System.out.print("Nouveau " + nomChamp + " : ");
+        String nouvelleValeur = scanner.next();
+
+        switch (nomChamp) {
+            case "Nom":
+                particulier.setNom(nouvelleValeur);
+                break;
+            case "Prénom":
+                particulier.setPrenom(nouvelleValeur);
+                break;
+            case "Email":
+                particulier.setEmail(nouvelleValeur);
+                break;
+            case "Adresse postale":
+                particulier.setAdressePostale(nouvelleValeur);
+                break;
+            case "Date de naissance":
+                particulier.setDateNaissance(nouvelleValeur);
+                break;
+            case "Profil":
+                particulier.setProfil(nouvelleValeur);
+                break;
         }
     }
     
