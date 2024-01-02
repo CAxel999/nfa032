@@ -637,7 +637,8 @@ public class Application {
                                                 if (erreur) {
                                                     System.out.println("Il n'existe pas de particulier possédant cet email.");
                                                 }
-                                                System.out.println("Voulez vous modifiez à nouveau un particulier ?\n" +
+                                                System.out.println("\n" +
+                                                        "Voulez vous modifiez à nouveau un particulier ?\n" +
                                                         "   1. Oui\n" +
                                                         "   2. Non\n" +
                                                         "Faites votre choix : ");
@@ -702,7 +703,8 @@ public class Application {
                         break;
                 }
 
-                System.out.println("Voulez vous recommencer ?\n" +
+                System.out.println("\n" +
+                        "Voulez vous recommencer ?\n" +
                         "   1. Oui\n" +
                         "   2. Non\n" +
                         "Faites votre choix : ");
