@@ -23,6 +23,11 @@ public class Personne {
 		this.dateMaj = dateMaj;
 	}
 
+    public String toCsvString() {
+        return String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",
+                nom, prenom, email, adressePostale, dateNaissance, profil, dateAjout, dateMaj);
+    }
+
 	public String getNom() {
 		return nom;
 	}

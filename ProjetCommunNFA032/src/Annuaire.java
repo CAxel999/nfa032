@@ -47,6 +47,17 @@ public class Annuaire {
         }
     }
     
+    private void sauvegarderAnnuaireUpdate() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHIER_ANNUAIRE))) {
+            for (Personne particulier : annuaires) {
+                writer.write(particulier.toCsvString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+        
     private void creerFichierComptes() {
         try {
             File fichier = new File(FICHIER_ANNUAIRE);
@@ -59,7 +70,6 @@ public class Annuaire {
             e.printStackTrace();
         }
     }
-
 
     private void chargerAnnuaire() {
     	annuaires = new ArrayList<>();
@@ -288,7 +298,7 @@ public class Annuaire {
                 }
             } while (choix != 0);
 
-            sauvegarderAnnuaire(); // Sauvegarder les modifications dans le fichier annuaire
+            sauvegarderAnnuaireUpdate(); // Sauvegarder les modifications dans le fichier annuaire
             System.out.println("Particulier modifié avec succès.");
         } else {
             System.out.println("Echec : Aucun particulier trouvé avec cet email.");
@@ -312,6 +322,7 @@ public class Annuaire {
         switch (nomChamp) {
             case "Nom":
                 particulier.setNom(nouvelleValeur);
+                System.out.println("Nom : "+particulier.getNom());
                 break;
             case "Prénom":
                 particulier.setPrenom(nouvelleValeur);
