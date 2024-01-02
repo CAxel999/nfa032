@@ -145,8 +145,6 @@ public class Application {
     public static void main(String[] args) throws IOException {
 
         try {
-
-
             Application application = new Application();
             Datejour datejour = new Datejour();
 
@@ -154,10 +152,6 @@ public class Application {
             ArrayList<Annuaire> listeannuaire = application.listeAnnuaire();
 
             String reiterer = "1";
-
-            for (Compte comptetest : listecomptes) {
-                System.out.println(comptetest.getEmail() + "1\n" + comptetest.getMotdepasse() + "2\n" + comptetest.getRole() + "3\n");
-            }
 
             while (reiterer.equals("1")) {
 
