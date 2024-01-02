@@ -7,13 +7,10 @@ public class Application {
     public ArrayList<Compte> listeComptes() throws IOException {
 
         FileReader filereader = new FileReader("Comptes.txt");
-        //FileWriter filewriter = new FileWriter("Comptes.txt", true);
         BufferedReader bufferedreader = new BufferedReader(filereader);
-        //BufferedWriter bufferedwriter = new BufferedWriter(filewriter);
 
         String temporaire = bufferedreader.readLine();
         String chainecomptes = "";
-        //temporaire = bufferedreader.readLine();
 
         while (temporaire != null) {
 
@@ -22,39 +19,17 @@ public class Application {
 
             temporaire = bufferedreader.readLine();
         }
-        System.out.println(chainecomptes);
-
 
         String[] tabcomptes = chainecomptes.split(";");
 
         bufferedreader.close();
-        //bufferedwriter.close();
         filereader.close();
-        //filewriter.close();
 
         ArrayList<Compte> listecomptes = new ArrayList<>();
 
         for (int i = 0; i<tabcomptes.length - 1 ; i = i + 3){
-            System.out.println(tabcomptes[i] + tabcomptes[i+1] + tabcomptes[i+2]);
-
 
             Compte compte = new Compte(tabcomptes[i], tabcomptes[i+1], tabcomptes[i+2]);
-
-            /*for(int j = i; j < i + 3; j = j + 1 ){
-
-                if(j == i){
-                    compte.setEmail(tabcomptes[j]);
-                }
-
-                if(j == i + 1){
-                    compte.setMotdepasse(tabcomptes[j]);
-                }
-
-                if(j == i + 2){
-                    compte.setRole(tabcomptes[j]);
-                }
-
-            }*/
 
             listecomptes.add(compte);
 
@@ -67,8 +42,6 @@ public class Application {
 
         FileReader filereader = new FileReader("Annuaire.txt");
         BufferedReader bufferedreader = new BufferedReader(filereader);
-        //rajouter pour toutes les lignes
-
 
         String temporaire = bufferedreader.readLine();
         String chaineannuaire = "";
@@ -91,44 +64,6 @@ public class Application {
         for (int i = 0; i<tabannuaire.length - 1; i = i + 8){
 
             Annuaire annuaire = new Annuaire(tabannuaire[i], tabannuaire[i+1], tabannuaire[i+2], tabannuaire[i+3], tabannuaire[i+4], tabannuaire[i+5], tabannuaire[i+6], tabannuaire[i+7]);
-            /*Annuaire annuaire = new Annuaire();
-            Annuaire annuaire = new Annuaire("nom", "prenom", "email", "adressepostale", "datenaissance", "profil", "dateajout", "datemaj");
-
-            for(int j = i; j < i + 8; j = j + 1 ){
-
-                if(j == i){
-                    annuaire.setNom(tabannuaire[j]);
-                }
-
-                if(j == i + 1){
-                    annuaire.setPrenom(tabannuaire[j]);
-                }
-
-                if(j == i + 2){
-                    annuaire.setEmail(tabannuaire[j]);
-                }
-
-                if(j == i + 3){
-                    annuaire.setAdressePostale(tabannuaire[j]);
-                }
-
-                if(j == i + 4){
-                    annuaire.setDateNaissance(tabannuaire[j]);
-                }
-
-                if(j == i + 5){
-                    annuaire.setProfil(tabannuaire[j]);
-                }
-
-                if(j == i + 6){
-                    annuaire.setDateAjout(tabannuaire[j]);
-                }
-
-                if(j == i + 7){
-                    annuaire.setDateMaj(tabannuaire[j]);
-                }
-
-            }*/
 
             listeannuaire.add(annuaire);
 
@@ -214,8 +149,6 @@ public class Application {
 
             Application application = new Application();
             Datejour datejour = new Datejour();
-            //File comptes = new File("Comptes.txt");
-            //System.out.println(application.listeComptes());
 
             ArrayList<Compte> listecomptes = application.listeComptes();
             ArrayList<Annuaire> listeannuaire = application.listeAnnuaire();
@@ -243,8 +176,6 @@ public class Application {
                         "\n" +
                         "Faites votre choix : ___\n");
 
-                //try {
-                //ArrayList<Compte> listecomptes = application.listeComptes();
                 Scanner scanner = new Scanner(System.in);
 
                 String verification = scanner.nextLine();
@@ -266,7 +197,6 @@ public class Application {
 
                             Compte nouveaucompte = new Compte();
                             Annuaire nouvelannuaire = new Annuaire();
-                            //Annuaire nouvelannuaire = new Annuaire("nom", "prenom", "email", "adressepostale", "datenaissance", "profil", "dateajout", "datemaj");
 
                             boolean trouve2 = false;
 
@@ -431,7 +361,6 @@ public class Application {
                     case "2":
 
                         Annuaire annuaire = new Annuaire();
-                        //Annuaire annuaire = new Annuaire("nom","prenom","email","adressepostale","datenaissance","profil","dateajout","datmaj");
 
                         int compteur = 0;
                         int i = listeannuaire.size();
