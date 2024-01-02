@@ -11,16 +11,19 @@ public class Application {
         BufferedReader bufferedreader = new BufferedReader(filereader);
         //BufferedWriter bufferedwriter = new BufferedWriter(filewriter);
 
-        String chainecomptes = "";
         String temporaire = bufferedreader.readLine();
+        String chainecomptes = "";
+        //temporaire = bufferedreader.readLine();
 
         while (temporaire != null) {
 
-            chainecomptes = chainecomptes.concat(";");
             chainecomptes = chainecomptes.concat(temporaire);
+            chainecomptes = chainecomptes.concat(";");
 
             temporaire = bufferedreader.readLine();
         }
+        System.out.println(chainecomptes);
+
 
         String[] tabcomptes = chainecomptes.split(";");
 
@@ -32,6 +35,8 @@ public class Application {
         ArrayList<Compte> listecomptes = new ArrayList<>();
 
         for (int i = 0; i<tabcomptes.length - 1 ; i = i + 3){
+            System.out.println(tabcomptes[i] + tabcomptes[i+1] + tabcomptes[i+2]);
+
 
             Compte compte = new Compte(tabcomptes[i], tabcomptes[i+1], tabcomptes[i+2]);
 
@@ -65,13 +70,14 @@ public class Application {
         //rajouter pour toutes les lignes
 
 
-        String chaineannuaire = "";
         String temporaire = bufferedreader.readLine();
+        String chaineannuaire = "";
 
         while (temporaire != null) {
 
-            chaineannuaire = chaineannuaire.concat(";");
             chaineannuaire = chaineannuaire.concat(temporaire);
+            chaineannuaire = chaineannuaire.concat(";");
+
             temporaire = bufferedreader.readLine();
         }
 
@@ -131,6 +137,75 @@ public class Application {
         return listeannuaire;
 
     }
+    public void fichierCompte(ArrayList<Compte> listecompte) throws IOException {
+
+        FileWriter fileWriter = new FileWriter("Comptes.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+        String ligne;
+
+        for(Compte compte : listecompte){
+
+            ligne = "";
+            ligne = compte.getEmail();
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(compte.getMotdepasse());
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(compte.getRole());
+
+            bufferedWriter.write(ligne);
+            bufferedWriter.newLine();
+        }
+
+        bufferedWriter.flush();
+
+        bufferedWriter.close();
+        fileWriter.close();
+    }
+    public void fichierAnnuaire(ArrayList<Annuaire> listeannuaire) throws IOException {
+
+        FileWriter fileWriter = new FileWriter("Annuaire.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+        String ligne;
+
+        for(Annuaire annuaire : listeannuaire){
+
+            ligne = "";
+            ligne = annuaire.getNom();
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(annuaire.getPrenom());
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(annuaire.getEmail());
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(annuaire.getAdressePostale());
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(annuaire.getDateNaissance());
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(annuaire.getProfil());
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(annuaire.getDateAjout());
+            ligne = ligne.concat(";");
+
+            ligne = ligne.concat(annuaire.getDateMaj());
+
+            bufferedWriter.write(ligne);
+            bufferedWriter.newLine();
+        }
+
+        bufferedWriter.flush();
+
+        bufferedWriter.close();
+        fileWriter.close();
+    }
 
     public static void main(String[] args) throws IOException {
 
@@ -138,11 +213,14 @@ public class Application {
         Datejour datejour = new Datejour();
         //File comptes = new File("Comptes.txt");
         //System.out.println(application.listeComptes());
+
         ArrayList<Compte> listecomptes = application.listeComptes();
+        ArrayList<Annuaire> listeannuaire = application.listeAnnuaire();
+
         String reiterer = "1";
 
         for(Compte comptetest : listecomptes){
-            System.out.println(comptetest.getEmail()+"\n"+comptetest.getMotdepasse()+"\n"+comptetest.getRole()+"\n");
+            System.out.println(comptetest.getEmail()+"1\n"+comptetest.getMotdepasse()+"2\n"+comptetest.getRole()+"3\n");
         }
 
         while(reiterer.equals("1")) {
@@ -164,13 +242,13 @@ public class Application {
 
             //try {
             //ArrayList<Compte> listecomptes = application.listeComptes();
-            ArrayList<Annuaire> listeannuaire = application.listeAnnuaire();
             Scanner scanner = new Scanner(System.in);
 
             String verification = scanner.nextLine();
 
             boolean trouve = false;
             boolean erreur = false;
+
 
             switch (verification) {
 
@@ -182,6 +260,12 @@ public class Application {
                         String email = scanner.nextLine();
                         System.out.println("Saisissez votre mot de passe :");
                         String motdepasse = scanner.nextLine();
+
+                        Compte nouveaucompte = new Compte();
+                        Annuaire nouvelannuaire = new Annuaire();
+                        //Annuaire nouvelannuaire = new Annuaire("nom", "prenom", "email", "adressepostale", "datenaissance", "profil", "dateajout", "datemaj");
+
+                        boolean trouve2 = false;
 
                         for (Compte compte : listecomptes) {
 
@@ -203,7 +287,6 @@ public class Application {
 
                                             verification = scanner.nextLine();
 
-                                            boolean trouve2 = false;
 
                                             switch (verification) {
 
@@ -225,8 +308,6 @@ public class Application {
                                                     }
                                                     if (!trouve2) {
 
-                                                        Compte nouveaucompte = new Compte();
-
                                                         nouveaucompte.setEmail(email);
                                                         nouveaucompte.setRole("admin");
 
@@ -234,8 +315,6 @@ public class Application {
                                                         String entree = scanner.nextLine();
                                                         nouveaucompte.setMotdepasse(motdepasse);
 
-                                                        Annuaire nouvelannuaire = new Annuaire();
-                                                        //Annuaire nouvelannuaire = new Annuaire("nom", "prenom", "email", "adressepostale", "datenaissance", "profil", "dateajout", "datemaj");
 
                                                         System.out.println("Saisir le nom de l'administrateur pour l'annuaire :");
                                                         entree = scanner.nextLine();
@@ -245,7 +324,7 @@ public class Application {
                                                         entree = scanner.nextLine();
                                                         nouvelannuaire.setPrenom(entree);
 
-                                                        nouveaucompte.setEmail(email);
+                                                        nouvelannuaire.setEmail(email);
 
                                                         System.out.println("Saisir l'adresse postale de l'administrateur pour l'annuaire :");
                                                         entree = scanner.nextLine();
@@ -263,8 +342,6 @@ public class Application {
                                                         nouvelannuaire.setDateAjout(datejour.getDateTime());
                                                         nouvelannuaire.setDateMaj(datejour.getDateTime());
 
-                                                        listecomptes.add(nouveaucompte);
-                                                        listeannuaire.add(nouvelannuaire);
                                                     }
                                                     break;
 
@@ -285,7 +362,6 @@ public class Application {
                                                         }
                                                     }
                                                     if (!trouve2) {
-                                                        Compte nouveaucompte = new Compte();
 
                                                         nouveaucompte.setEmail(email);
                                                         nouveaucompte.setRole("user");
@@ -293,9 +369,6 @@ public class Application {
                                                         System.out.println("Saisir le mot de passe du nouveau particulier :");
                                                         String entree = scanner.nextLine();
                                                         nouveaucompte.setMotdepasse(motdepasse);
-
-                                                        Annuaire nouvelannuaire = new Annuaire();
-                                                        //Annuaire nouvelannuaire = new Annuaire("nom", "prenom", "email", "adressepostale", "datenaissance", "profil", "dateajout", "datemaj");
 
                                                         System.out.println("Saisir le nom du particulier pour l'annuaire :");
                                                         entree = scanner.nextLine();
@@ -305,7 +378,7 @@ public class Application {
                                                         entree = scanner.nextLine();
                                                         nouvelannuaire.setPrenom(entree);
 
-                                                        nouveaucompte.setEmail(email);
+                                                        nouvelannuaire.setEmail(email);
 
                                                         System.out.println("Saisir l'adresse postale du particulier pour l'annuaire :");
                                                         entree = scanner.nextLine();
@@ -323,8 +396,6 @@ public class Application {
                                                         nouvelannuaire.setDateAjout(datejour.getDateTime());
                                                         nouvelannuaire.setDateMaj(datejour.getDateTime());
 
-                                                        listecomptes.add(nouveaucompte);
-                                                        listeannuaire.add(nouvelannuaire);
                                                     }
                                                     break;
 
@@ -344,6 +415,11 @@ public class Application {
                                 }
                             }
                         }
+                        if(!trouve2) {
+
+                            listecomptes.add(nouveaucompte);
+                            listeannuaire.add(nouvelannuaire);
+                        }
                     } while (!trouve);
 
                     break;
@@ -355,7 +431,7 @@ public class Application {
                     //Annuaire annuaire = new Annuaire("nom","prenom","email","adressepostale","datenaissance","profil","dateajout","datmaj");
 
                     int compteur = 0;
-                    int i = listeannuaire.size() - 1;
+                    int i = listeannuaire.size();
 
                     do {
 
@@ -375,7 +451,9 @@ public class Application {
                                 System.out.println("Saisir un nom à rechercher :");
                                 String nom = scanner.nextLine();
 
-                                while (i >= 0 && compteur < 10) {
+                                System.out.print("Les entrées de l'annuaire correspondantes ");
+
+                                while (i > 0 && compteur < 10) {
 
                                     i = i - 1;
 
@@ -383,19 +461,25 @@ public class Application {
 
                                     if (annuaire.getNom().equals(nom)) {
 
+                                        trouve = true;
+
                                         compteur = compteur + 1;
 
-                                        System.out.println("L'entrée de l'annuaire correspondante contient :\n" +
+                                        System.out.println("\n" +
                                                 " Nom : " + annuaire.getNom() + "\n" +
                                                 " Prenom : " + annuaire.getPrenom() + "\n" +
                                                 " Email : " + annuaire.getEmail() + "\n" +
                                                 " Adresse postale : " + annuaire.getAdressePostale() + "\n" +
                                                 " Date de naissance : " + annuaire.getDateNaissance() + "\n" +
                                                 " Profil : " + annuaire.getProfil() + "\n" +
-                                                " Ajouté le : " + annuaire.getDateAjout() + "\n" +
+                                                " Ajouté le " + annuaire.getDateAjout() + "\n" +
                                                 " Modifié pour la dernière fois le " + annuaire.getDateMaj());
                                     }
 
+
+                                }
+                                if(!trouve){
+                                    System.out.println("n'éxistent pas.");
                                 }
 
                                 break;
@@ -418,8 +502,11 @@ public class Application {
                                                 " Adresse postale : " + iterationannuaire.getAdressePostale() + "\n" +
                                                 " Date de naissance : " + iterationannuaire.getDateNaissance() + "\n" +
                                                 " Profil : " + iterationannuaire.getProfil() + "\n" +
-                                                " Ajouté le : " + iterationannuaire.getDateAjout() + "\n" +
+                                                " Ajouté le " + iterationannuaire.getDateAjout() + "\n" +
                                                 " Modifié pour la dernière fois le " + iterationannuaire.getDateMaj());
+                                    }
+                                    else {
+                                        System.out.println("Il n'éxiste pas d'entrée correpondante dans l'annuaire.");
                                     }
                                 }
 
@@ -431,8 +518,10 @@ public class Application {
 
                                 System.out.println("Saisir un profil à rechercher :");
                                 String profil = scanner.nextLine();
+                                System.out.print("Les entrées de l'annuaire correspondantes ");
 
-                                while (i >= 0 && compteur < 10) {
+
+                                while (i > 0 && compteur < 10) {
 
                                     i = i - 1;
 
@@ -440,19 +529,24 @@ public class Application {
 
                                     if (annuaire.getProfil().equals(profil)) {
 
+                                        trouve = true;
+
                                         compteur = compteur + 1;
 
-                                        System.out.println("L'entrée de l'annuaire correspondante contient :\n" +
+                                        System.out.println("\n" +
                                                 " Nom : " + annuaire.getNom() + "\n" +
                                                 " Prenom : " + annuaire.getPrenom() + "\n" +
                                                 " Email : " + annuaire.getEmail() + "\n" +
                                                 " Adresse postale : " + annuaire.getAdressePostale() + "\n" +
                                                 " Date de naissance : " + annuaire.getDateNaissance() + "\n" +
                                                 " Profil : " + annuaire.getProfil() + "\n" +
-                                                " Ajouté le : " + annuaire.getDateAjout() + "\n" +
+                                                " Ajouté le " + annuaire.getDateAjout() + "\n" +
                                                 " Modifié pour la dernière fois le " + annuaire.getDateMaj());
                                     }
 
+                                }
+                                if(!trouve){
+                                    System.out.println("n'éxistent pas.");
                                 }
 
                                 break;
@@ -541,14 +635,14 @@ public class Application {
                                             if(erreur){
                                                 System.out.println("Il n'existe pas de particulier possédant cet email.");
                                             }
-                                            System.out.println("Voulez vous recommencer ?\n" +
+                                            System.out.println("Voulez vous modifiez à nouveau un particulier ?\n" +
                                                     "   1. Oui\n" +
                                                     "   2. Non\n" +
                                                     "Faites votre choix : ");
 
                                             reiterer1 = scanner.nextLine();
 
-                                        }while(erreur || reiterer1.equals("1"));
+                                        }while(reiterer1.equals("1"));
 
                                     } else {
 
@@ -613,6 +707,8 @@ public class Application {
 
             reiterer = scanner.nextLine();
         }
+        application.fichierCompte(listecomptes);
+        application.fichierAnnuaire(listeannuaire);
 
 
         /*
