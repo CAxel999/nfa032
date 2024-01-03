@@ -4,6 +4,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Application {
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     public ArrayList<Compte> listeComptes() throws IOException {
 
         FileReader filereader = new FileReader("Comptes.txt");
@@ -81,7 +86,6 @@ public class Application {
 
         for(Compte compte : listecompte){
 
-            ligne = "";
             ligne = compte.getEmail();
             ligne = ligne.concat(";");
 
@@ -108,7 +112,6 @@ public class Application {
 
         for(Annuaire annuaire : listeannuaire){
 
-            ligne = "";
             ligne = annuaire.getNom();
             ligne = ligne.concat(";");
 
@@ -421,6 +424,8 @@ public class Application {
 
                                         if (iterationannuaire.getEmail().equals(email)) {
 
+                                            trouve = true;
+
                                             System.out.println("L'entrée de l'annuaire correspondante contient :\n" +
                                                     " Nom : " + iterationannuaire.getNom() + "\n" +
                                                     " Prenom : " + iterationannuaire.getPrenom() + "\n" +
@@ -430,7 +435,8 @@ public class Application {
                                                     " Profil : " + iterationannuaire.getProfil() + "\n" +
                                                     " Ajouté le " + iterationannuaire.getDateAjout() + "\n" +
                                                     " Modifié pour la dernière fois le " + iterationannuaire.getDateMaj());
-                                        } else {
+                                        }
+                                        if(!trouve){
                                             System.out.println("Il n'éxiste pas d'entrée correpondante dans l'annuaire.");
                                         }
                                     }
