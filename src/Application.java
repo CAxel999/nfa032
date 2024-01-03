@@ -436,9 +436,10 @@ public class Application {
                                                     " Ajouté le " + iterationannuaire.getDateAjout() + "\n" +
                                                     " Modifié pour la dernière fois le " + iterationannuaire.getDateMaj());
                                         }
-                                        if(!trouve){
-                                            System.out.println("Il n'éxiste pas d'entrée correpondante dans l'annuaire.");
-                                        }
+
+                                    }
+                                    if(!trouve){
+                                        System.out.println("Il n'éxiste pas d'entrée correpondante dans l'annuaire.");
                                     }
 
                                     break;
