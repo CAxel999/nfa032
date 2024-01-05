@@ -13,7 +13,7 @@ public class CompteManager {
 
 	 public CompteManager() {
 	    this.comptes = new ArrayList<>();
-	    comptes.add(new Compte("admin@cnam.fr", "admin", "admin"));
+	    //comptes.add(new Compte("admin@cnam.fr", "admin", "admin"));
 	 } 
 	 
 	    public boolean authentifier(String email, String motDePasse) {
@@ -49,7 +49,7 @@ public class CompteManager {
 	 }
 
 	private void chargerComptes() {
-	    comptes = new ArrayList<>();
+	    //comptes = new ArrayList<>();
 
 	    try (BufferedReader reader = new BufferedReader(new FileReader(this.FICHIER_COMPTES))) {
 	        String ligne;
@@ -60,7 +60,7 @@ public class CompteManager {
 	            comptes.add(compte);
 	         }
 	    } catch (FileNotFoundException e) {
-	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier...");
+	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier des comptes.");
 	        creerFichierComptes();
 	        chargerComptes(); // Essayez de charger à nouveau après la création du fichier
 
@@ -76,7 +76,7 @@ public class CompteManager {
 	           writer.newLine();
 	        }
 	    } catch (FileNotFoundException e) {
-	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier...");
+	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier des comptes.");
 	        creerFichierComptes();
 	        chargerComptes(); // Essayez de charger à nouveau après la création du fichier
 	    } catch (IOException e) {
@@ -114,5 +114,27 @@ public class CompteManager {
 		    comptes.add(admin);
 		    sauvegarderComptes();
 		    System.out.println("Utilisateur ajouté avec succès.");
-     }	  
+     }	
+	
+    boolean isAdmin(String email) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHIER_COMPTES))) {
+            String ligne;
+            while ((ligne = reader.readLine()) != null) {
+                String[] infosCompte = ligne.split(";");
+                if (infosCompte.length >= 3) {
+                    String emailCompte = infosCompte[0];
+                    String motDePasse = infosCompte[1];
+                    String role = infosCompte[2];
+
+                    if (email.equals(emailCompte) && "admin".equals(role)) {
+                        return true; // L'utilisateur est un administrateur
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); 
+        }
+
+        return false; // L'utilisateur n'est pas un administrateur ou une erreur s'est produite
+    }
 }

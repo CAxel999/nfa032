@@ -5,13 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Annuaire {
 
 	private ArrayList<Personne> annuaires;
-    private CompteManager compteManager;
+    private CompteManager compteManager = new CompteManager();
     private String FICHIER_ANNUAIRE = "fichier_annuaire.csv";
 
     public Annuaire() {
@@ -22,7 +24,7 @@ public class Annuaire {
         this.compteManager = compteManager;
         this.annuaires = new ArrayList<>();
     }
-
+    
     public void sauvegarderAnnuaire() {
     	
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.FICHIER_ANNUAIRE))) {
@@ -46,18 +48,7 @@ public class Annuaire {
             e.printStackTrace();
         }
     }
-    
-    private void sauvegarderAnnuaireUpdate() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHIER_ANNUAIRE))) {
-            for (Personne particulier : annuaires) {
-                writer.write(particulier.toCsvString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-        
+            
     private void creerFichierComptes() {
         try {
             File fichier = new File(FICHIER_ANNUAIRE);
@@ -71,8 +62,8 @@ public class Annuaire {
         }
     }
 
-    private void chargerAnnuaire() {
-    	annuaires = new ArrayList<>();
+    void chargerAnnuaire() {
+    	//annuaires = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(this.FICHIER_ANNUAIRE))) {
             String ligne;
@@ -94,7 +85,7 @@ public class Annuaire {
                 Personne personne = new Personne(nom, prenom, email, adressePostale, dateNaissance, profil, dateAjout, dateMaj);
                 
                 // Ajouter le particulier à la liste
-                annuaires.add(personne);
+                this.annuaires.add(personne);
             }
 	    } catch (FileNotFoundException e) {
 	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier Annuaire.");
@@ -105,13 +96,35 @@ public class Annuaire {
         }
     }
     
-    public void ajouterParticulier(String email, String motDePasse) {
-        chargerAnnuaire(); // Charger l'annuaire depuis le fichier
+    // Écrire la liste des personnes dans le fichier annuaire    
+    private void ecrireAnnuaire(ArrayList<Personne> personnes) {
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHIER_ANNUAIRE))) {
+            for (Personne personne : personnes) {
+                //String ligne = personne.toCsvString(); 
+                writer.write( personne.getNom() + ";" +
+                        personne.getPrenom() + ";" +
+                        personne.getEmail() + ";" +
+                        personne.getAdressePostale() + ";" +
+                        personne.getDateNaissance() + ";" +
+                        personne.getProfil() + ";" +
+                        personne.getDateAjout() + ";" +
+                        personne.getDateMaj() + "\n");
+                //writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); 
+        }
+    }
+    
+    /*public void ajouterParticulier(String email, String motDePasse) {
+        chargerAnnuaire(); // Charger l'annuaire depuis le fichier
+        
             // Vérifier si le compte existe déjà
             if (!compteManager.compteExiste(email)) {
                 // Demander les informations sur le particulier
                 Scanner scanner = new Scanner(System.in);
+                
                 System.out.print("Nom : ");
                 String nom = scanner.nextLine();
 
@@ -126,12 +139,14 @@ public class Annuaire {
 
                 System.out.print("Profil (Auditeurs, Enseignants, Direction) : ");
                 String profil = scanner.nextLine();
-
+                
+                LocalDate date = LocalDate.now();
+                
                 // Ajouter le compte
                 compteManager.ajouterParticulier(email, motDePasse);
                 
                 // Créer un objet Particulier avec les informations saisies
-                Personne particulier = new Personne(nom, prenom, email, adressePostale, dateNaissance, profil, "", "");
+                Personne particulier = new Personne(nom, prenom, email, adressePostale, dateNaissance, profil, date.toString(), date.toString());
                 
                 // Ajouter le particulier à l'annuaire
                 annuaires.add(particulier);
@@ -139,10 +154,11 @@ public class Annuaire {
                 // Sauvegarder l'annuaire
                 sauvegarderAnnuaire();
                 System.out.println("Particulier ajouté avec succès.");
+                
             } else {
                 System.out.println("Echec : Un compte avec cet email existe déjà.");
             }
-          }
+          }*/
     
     public ArrayList<Personne> rechercherParNom(String nom) {
         ArrayList<Personne> resultats = new ArrayList<>();
@@ -160,6 +176,9 @@ public class Annuaire {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        // Triez la liste par date d'ajout (du plus récent au plus ancien)
+        Collections.sort(resultats, (p1, p2) -> p2.getDateAjout().compareTo(p1.getDateAjout()));
 
         return resultats;
     }
@@ -201,6 +220,9 @@ public class Annuaire {
             e.printStackTrace();
         }
 
+        // Triez la liste par date d'ajout (du plus récent au plus ancien)
+        Collections.sort(resultats, (p1, p2) -> p2.getDateAjout().compareTo(p1.getDateAjout()));
+        
         return resultats;
     }
 
@@ -236,13 +258,20 @@ public class Annuaire {
     }
 
     private void afficherResultats(ArrayList<Personne> resultats) {
-        if (resultats.isEmpty()) {
-            System.out.println("Aucun résultat trouvé.");
-        } else {
-            System.out.println("Résultats de la recherche :");
-            for (Personne particulier : resultats) {
-                System.out.println("Nom : "+particulier.getNom()+" Prenom : "+particulier.getPrenom()+" Email : "+particulier.getEmail()); // Supposant que Particulier a une méthode toString appropriée
+        int count = 0;
+
+        System.out.println("Résultats de la recherche :");
+        for (Personne particulier : resultats) {
+            if (count < 10) {
+                System.out.println("Nom : "+particulier.getNom()+" Prenom : "+particulier.getPrenom()+" Email : "+particulier.getEmail()+ " Date de naissance : "+particulier.getDateNaissance()+" Profil : "+particulier.getProfil()); 
+                count++;
+            } else {
+                break; 
             }
+        }
+
+        if (count == 0) {
+            System.out.println("Aucun résultat trouvé.");
         }
     }
 
@@ -260,7 +289,15 @@ public class Annuaire {
         chargerAnnuaire(); // Charger l'annuaire depuis le fichier
 
         Personne particulierAModifier = rechercherParEmail(email);
-
+        int indexP = -1;
+        for(Personne p:annuaires) {
+        	if(p.getNom().equals(particulierAModifier.getNom())) {
+        		indexP = annuaires.indexOf(p);
+        		System.out.println("TRUE"+indexP);
+        	}
+        		
+        }
+        
         if (particulierAModifier != null) {
             // Demander les champs à modifier
             Scanner scanner = new Scanner(System.in);
@@ -296,10 +333,16 @@ public class Annuaire {
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
                 }
+                if (indexP != -1) {
+                    this.annuaires.set(indexP, particulierAModifier);
+                }
+                
+                System.out.println("Aprés : nom = "+ indexP);
+
+                ecrireAnnuaire(this.annuaires);
+                System.out.println("Particulier modifié avec succès.");
             } while (choix != 0);
 
-            sauvegarderAnnuaireUpdate(); // Sauvegarder les modifications dans le fichier annuaire
-            System.out.println("Particulier modifié avec succès.");
         } else {
             System.out.println("Echec : Aucun particulier trouvé avec cet email.");
         }
@@ -318,7 +361,10 @@ public class Annuaire {
     private void modifierChamp(Personne particulier, String nomChamp, Scanner scanner) {
         System.out.print("Nouveau " + nomChamp + " : ");
         String nouvelleValeur = scanner.next();
-
+        
+        LocalDate dateMAJ = LocalDate.now();
+        particulier.setDateMaj(dateMAJ.toString());
+        
         switch (nomChamp) {
             case "Nom":
                 particulier.setNom(nouvelleValeur);
