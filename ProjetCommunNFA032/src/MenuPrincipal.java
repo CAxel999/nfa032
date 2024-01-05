@@ -44,17 +44,22 @@ public class MenuPrincipal {
                     case 3:
                         // Authentification
                         System.out.print("Email : ");
-                        String emailUser = scanner.nextLine();
+                        String email1 = scanner.nextLine();
 
                         System.out.print("Mot de passe : ");
-                        String motDePasseUser = scanner.nextLine();
+                        String motDePasse1 = scanner.nextLine();
 
-                        if (compteManager.authentifier(emailUser, motDePasseUser)) {
+                        if (compteManager.authentifier(email1, motDePasse1)) {
                             // L'utilisateur est authentifié
                         } else {
                             System.out.println("Echec de l'authentification. Vérifiez vos informations.");
                         }
-                        annuaire.modifierParticulier(emailUser);
+                        // Vérification des droits d'accès
+                        if (!compteManager.isAdmin(email1)) {
+                        	annuaire.modifierParticulier(email1);
+                        	break;
+                        }
+                        annuaire.modifierParticulier();
                         break;
                     case 0:
                         System.out.println("Au revoir !");
@@ -119,7 +124,7 @@ public class MenuPrincipal {
 	            String mdp = scanner.nextLine();
 	     	    compteManager.ajouterAdministrateur(email, mdp);
 	            annuaire.getPersonnes().add(new Personne(nom, prenom, email, adresse, dateNaissance, profil, date.toString(), date.toString()));
-	            annuaire.sauvegarderAnnuaire();
+	            //annuaire.sauvegarderAnnuaire();
 	            System.out.println("Fichier Créer");  
 	        } else {
 	            System.out.println("Echec : Un compte avec cet email existe déjà.");

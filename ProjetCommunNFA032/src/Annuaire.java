@@ -19,7 +19,7 @@ public class Annuaire {
     public Annuaire() {
         this.annuaires = new ArrayList<>();
     }
-    
+ 
     public Annuaire(CompteManager compteManager) {
         this.compteManager = compteManager;
         this.annuaires = new ArrayList<>();
@@ -282,6 +282,70 @@ public class Annuaire {
             System.out.println("Résultat de la recherche :");
             System.out.println("Nom : "+resultat.getNom()+" Prenom : "+resultat.getPrenom()+" Email : "+resultat.getEmail()); // Supposant que Particulier a une méthode toString appropriée
 
+        }
+    }
+    
+    public void modifierParticulier() {
+        chargerAnnuaire(); // Charger l'annuaire depuis le fichier
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Veuillez saisir l'email de la personne que vous voulez modifier ces informations :");
+        String email = scanner.nextLine();
+        Personne particulierAModifier = rechercherParEmail(email);
+        int indexP = -1;
+        for(Personne p:annuaires) {
+        	if(p.getNom().equals(particulierAModifier.getNom())) {
+        		indexP = annuaires.indexOf(p);
+        		System.out.println("TRUE"+indexP);
+        	}
+        		
+        }
+        
+        if (particulierAModifier != null) {
+        	
+            // Demander les champs à modifier
+            System.out.println("Quels champs souhaitez-vous modifier ?");
+
+            int choix;
+            do {
+                afficherMenuModifier();
+                choix = scanner.nextInt();
+
+                switch (choix) {
+                    case 1:
+                        modifierChamp(particulierAModifier, "Nom", scanner);
+                        break;
+                    case 2:
+                        modifierChamp(particulierAModifier, "Prénom", scanner);
+                        break;
+                    case 3:
+                        modifierChamp(particulierAModifier, "Email", scanner);
+                        break;
+                    case 4:
+                        modifierChamp(particulierAModifier, "Adresse postale", scanner);
+                        break;
+                    case 5:
+                        modifierChamp(particulierAModifier, "Date de naissance", scanner);
+                        break;
+                    case 6:
+                        modifierChamp(particulierAModifier, "Profil", scanner);
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.out.println("Choix invalide. Veuillez réessayer.");
+                }
+                if (indexP != -1) {
+                    this.annuaires.set(indexP, particulierAModifier);
+                }
+                
+                System.out.println("Aprés : nom = "+ indexP);
+
+                ecrireAnnuaire(this.annuaires);
+                System.out.println("Particulier modifié avec succès.");
+            } while (choix != 0);
+
+        } else {
+            System.out.println("Echec : Aucun particulier trouvé avec cet email.");
         }
     }
     
