@@ -1,3 +1,6 @@
+/**
+ * Classe permettant la création d'objet Compte
+ */
 public class Compte {
     private String email;
     private String motdepasse;

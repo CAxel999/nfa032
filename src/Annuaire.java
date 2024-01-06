@@ -1,3 +1,6 @@
+/**
+ * Classe permettant la création d'objet Annuaire
+ */
 public class Annuaire {
     private String nom;
     private String prenom;

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Application {
     /**
+     * Rend une liste d'objet Compte à partir d'un fichier Comptes.txt
      *
      * @return
      * @throws IOException
@@ -43,6 +44,12 @@ public class Application {
         return listecomptes;
 
     }
+    /**
+     * Rend une liste d'objet Annuaire à partir d'un fichier Annuaire.txt
+     *
+     * @return
+     * @throws IOException
+     */
     public ArrayList<Annuaire> listeAnnuaire() throws IOException {
 
         FileReader filereader = new FileReader("Annuaire.txt");
@@ -77,6 +84,13 @@ public class Application {
         return listeannuaire;
 
     }
+
+    /**
+     * Ecris le contenu de la liste de Compte dans le fichier Comptes.txt après modification dû au programme
+     *
+     * @param listecompte
+     * @throws IOException
+     */
     public void fichierCompte(ArrayList<Compte> listecompte) throws IOException {
 
         FileWriter fileWriter = new FileWriter("Comptes.txt");
@@ -103,6 +117,13 @@ public class Application {
         bufferedWriter.close();
         fileWriter.close();
     }
+
+    /**
+     * Ecris le contenu de la liste de Annuaire dans le fichier Annuaire.txt après modification dû au programme
+     *
+     * @param listeannuaire
+     * @throws IOException
+     */
     public void fichierAnnuaire(ArrayList<Annuaire> listeannuaire) throws IOException {
 
         FileWriter fileWriter = new FileWriter("Annuaire.txt");
@@ -145,6 +166,12 @@ public class Application {
         fileWriter.close();
     }
 
+    /**
+     * Permet d'intéragir de différentes manières avec les fichiers Comptes.txt et Annuaire.txt
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
 
         try {
@@ -219,7 +246,7 @@ public class Application {
 
 
                                                 switch (verification) {
-
+                                                    //Ajoute, si condition réunie, un administrateur
                                                     case "A":
 
                                                         erreur = false;
@@ -274,7 +301,7 @@ public class Application {
 
                                                         }
                                                         break;
-
+                                                    //Ajoute, si condition réunie, un particulier
                                                     case "B":
 
                                                         erreur = false;
@@ -382,6 +409,7 @@ public class Application {
 
                                     System.out.print("Les entrées de l'annuaire correspondantes ");
 
+                                    // Parcour la liste d'objet Annuaire en partant de la fin et écrit dans la console les entrées au nom correspondant avec un maximum de 10 entrées
                                     while (i > 0 && compteur < 10) {
 
                                         i = i - 1;
@@ -420,6 +448,7 @@ public class Application {
                                     System.out.println("Saisir un email à rechercher :");
                                     String email = scanner.nextLine();
 
+                                    // Parcour la liste d'objet Annuaire et écrit dans la console l'entrée à l'email correspondant
                                     for (Annuaire iterationannuaire : listeannuaire) {
 
                                         if (iterationannuaire.getEmail().equals(email)) {
@@ -452,7 +481,7 @@ public class Application {
                                     String profil = scanner.nextLine();
                                     System.out.print("Les entrées de l'annuaire correspondantes ");
 
-
+                                    // Parcour la liste d'objet Annuaire en partant de la fin et écrit dans la console les entrées au profil correspondant avec un maximum de 10 entrées
                                     while (i > 0 && compteur < 10) {
 
                                         i = i - 1;
