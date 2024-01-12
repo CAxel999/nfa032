@@ -292,13 +292,17 @@ public class Annuaire {
         String email = scanner.nextLine();
         Personne particulierAModifier = rechercherParEmail(email);
         int indexP = -1;
+        try {
         for(Personne p:annuaires) {
-        	if(p.getNom().equals(particulierAModifier.getNom())) {
-        		indexP = annuaires.indexOf(p);
-        	}
+        	
+            	if(p.getNom().equals(particulierAModifier.getNom())) {
+            		indexP = annuaires.indexOf(p);
+            	}
         		
         }
-        
+		} catch (Exception e) {
+			System.out.println("Email n'existe pas.");
+		}
         if (particulierAModifier != null) {
         	
             // Demander les champs à modifier
