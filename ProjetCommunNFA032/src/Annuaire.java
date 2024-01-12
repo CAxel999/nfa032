@@ -295,7 +295,6 @@ public class Annuaire {
         for(Personne p:annuaires) {
         	if(p.getNom().equals(particulierAModifier.getNom())) {
         		indexP = annuaires.indexOf(p);
-        		System.out.println("TRUE"+indexP);
         	}
         		
         }
@@ -313,21 +312,27 @@ public class Annuaire {
                 switch (choix) {
                     case "1":
                         modifierChamp(particulierAModifier, "Nom", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "2":
                         modifierChamp(particulierAModifier, "Prénom", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "3":
                         modifierChamp(particulierAModifier, "Email", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "4":
                         modifierChamp(particulierAModifier, "Adresse postale", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "5":
                         modifierChamp(particulierAModifier, "Date de naissance", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "6":
                         modifierChamp(particulierAModifier, "Profil", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "0":
                         break;
@@ -338,10 +343,7 @@ public class Annuaire {
                     this.annuaires.set(indexP, particulierAModifier);
                 }
                 
-                System.out.println("Aprés : nom = "+ indexP);
-
                 ecrireAnnuaire(this.annuaires);
-                System.out.println("Particulier modifié avec succès.");
             } while (!choix.equals(0));
 
         } else {
@@ -357,7 +359,6 @@ public class Annuaire {
         for(Personne p:annuaires) {
         	if(p.getNom().equals(particulierAModifier.getNom())) {
         		indexP = annuaires.indexOf(p);
-        		System.out.println("TRUE"+indexP);
         	}
         		
         }
@@ -376,21 +377,27 @@ public class Annuaire {
                 switch (choix) {
                     case "1":
                         modifierChamp(particulierAModifier, "Nom", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "2":
                         modifierChamp(particulierAModifier, "Prénom", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "3":
                         modifierChamp(particulierAModifier, "Email", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "4":
                         modifierChamp(particulierAModifier, "Adresse postale", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "5":
                         modifierChamp(particulierAModifier, "Date de naissance", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "6":
                         modifierChamp(particulierAModifier, "Profil", scanner);
+                        System.out.println("Particulier modifié avec succès.");
                         break;
                     case "0":
                         break;
@@ -401,10 +408,7 @@ public class Annuaire {
                     this.annuaires.set(indexP, particulierAModifier);
                 }
                 
-                System.out.println("Aprés : nom = "+ indexP);
-
                 ecrireAnnuaire(this.annuaires);
-                System.out.println("Particulier modifié avec succès.");
             } while (!choix.equals(0));
 
         } else {
