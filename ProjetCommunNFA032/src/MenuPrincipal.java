@@ -72,7 +72,7 @@ public class MenuPrincipal {
                         System.out.println("Choix invalide. Veuillez réessayer.");
                 }
 
-            } while (!choix.equals(0));
+            } while (!choix.equals("0"));
 
             scanner.close();
 

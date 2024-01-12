@@ -90,7 +90,7 @@ public class Annuaire {
 	    } catch (FileNotFoundException e) {
 	        System.out.println("Le fichier des comptes n'existe pas. Création du fichier Annuaire.");
 	        creerFichierComptes();
-
+	        chargerAnnuaire(); // Essayez de charger à nouveau après la création du fichier
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -344,7 +344,7 @@ public class Annuaire {
                 }
                 
                 ecrireAnnuaire(this.annuaires);
-            } while (!choix.equals(0));
+            } while (!choix.equals("0"));
 
         } else {
             System.out.println("Echec : Aucun particulier trouvé avec cet email.");
@@ -409,7 +409,7 @@ public class Annuaire {
                 }
                 
                 ecrireAnnuaire(this.annuaires);
-            } while (!choix.equals(0));
+            } while (!choix.equals("0"));
 
         } else {
             System.out.println("Echec : Aucun particulier trouvé avec cet email.");
