@@ -3,7 +3,11 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Classe principale
+ */
 public class Application {
+
     /**
      * Rend une liste d'objet Compte à partir d'un fichier Comptes.txt
      *
