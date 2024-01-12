@@ -10,15 +10,15 @@ public class MenuPrincipal {
 		
         Scanner scanner = new Scanner(System.in);
 
-            int choix;
+            String choix;
             do {
                 afficherMenu();
                 System.out.print("Faites votre choix : ");
-                choix = scanner.nextInt();
-                scanner.nextLine(); 
+                choix = scanner.nextLine();
+                //scanner.nextLine(); 
 
                 switch (choix) {
-                    case 1:
+                    case "1":
                         // Authentification
                         System.out.print("Email : ");
                         String email = scanner.nextLine();
@@ -40,10 +40,10 @@ public class MenuPrincipal {
                             break;
                         }
 
-                    case 2:
+                    case "2":
                         rechercherPersonne(scanner);
                         break;
-                    case 3:
+                    case "3":
                         // Authentification
                         System.out.print("Email : ");
                         String email1 = scanner.nextLine();
@@ -65,14 +65,14 @@ public class MenuPrincipal {
                         }
                         // Vérification des droits d'accès
 
-                    case 0:
+                    case "0":
                         System.out.println("Au revoir !");
                         break;
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
                 }
 
-            } while (choix != 0);
+            } while (!choix.equals(0));
 
             scanner.close();
 

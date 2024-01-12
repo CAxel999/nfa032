@@ -305,31 +305,31 @@ public class Annuaire {
             // Demander les champs à modifier
             System.out.println("Quels champs souhaitez-vous modifier ?");
 
-            int choix;
+            String choix;
             do {
                 afficherMenuModifier();
-                choix = scanner.nextInt();
+                choix = scanner.nextLine();
 
                 switch (choix) {
-                    case 1:
+                    case "1":
                         modifierChamp(particulierAModifier, "Nom", scanner);
                         break;
-                    case 2:
+                    case "2":
                         modifierChamp(particulierAModifier, "Prénom", scanner);
                         break;
-                    case 3:
+                    case "3":
                         modifierChamp(particulierAModifier, "Email", scanner);
                         break;
-                    case 4:
+                    case "4":
                         modifierChamp(particulierAModifier, "Adresse postale", scanner);
                         break;
-                    case 5:
+                    case "5":
                         modifierChamp(particulierAModifier, "Date de naissance", scanner);
                         break;
-                    case 6:
+                    case "6":
                         modifierChamp(particulierAModifier, "Profil", scanner);
                         break;
-                    case 0:
+                    case "0":
                         break;
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
@@ -342,7 +342,7 @@ public class Annuaire {
 
                 ecrireAnnuaire(this.annuaires);
                 System.out.println("Particulier modifié avec succès.");
-            } while (choix != 0);
+            } while (!choix.equals(0));
 
         } else {
             System.out.println("Echec : Aucun particulier trouvé avec cet email.");
@@ -368,31 +368,31 @@ public class Annuaire {
 
             System.out.println("Quels champs souhaitez-vous modifier ?");
 
-            int choix;
+            String choix;
             do {
                 afficherMenuModifier();
-                choix = scanner.nextInt();
+                choix = scanner.nextLine();
 
                 switch (choix) {
-                    case 1:
+                    case "1":
                         modifierChamp(particulierAModifier, "Nom", scanner);
                         break;
-                    case 2:
+                    case "2":
                         modifierChamp(particulierAModifier, "Prénom", scanner);
                         break;
-                    case 3:
+                    case "3":
                         modifierChamp(particulierAModifier, "Email", scanner);
                         break;
-                    case 4:
+                    case "4":
                         modifierChamp(particulierAModifier, "Adresse postale", scanner);
                         break;
-                    case 5:
+                    case "5":
                         modifierChamp(particulierAModifier, "Date de naissance", scanner);
                         break;
-                    case 6:
+                    case "6":
                         modifierChamp(particulierAModifier, "Profil", scanner);
                         break;
-                    case 0:
+                    case "0":
                         break;
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
@@ -405,7 +405,7 @@ public class Annuaire {
 
                 ecrireAnnuaire(this.annuaires);
                 System.out.println("Particulier modifié avec succès.");
-            } while (choix != 0);
+            } while (!choix.equals(0));
 
         } else {
             System.out.println("Echec : Aucun particulier trouvé avec cet email.");
