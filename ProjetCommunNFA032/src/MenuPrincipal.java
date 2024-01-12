@@ -28,16 +28,18 @@ public class MenuPrincipal {
 
                         if (compteManager.authentifier(email, motDePasse)) {
                             // L'utilisateur est authentifié
+                            // Vérification des droits d'accès
+                            if (!compteManager.isAdmin(email)) {
+                                System.out.println("Vous n'avez pas les droits d'ajouter un particulier.");
+                                return;
+                            }
+                            ajouterPersonne(scanner);
+                            break;
                         } else {
                             System.out.println("Echec de l'authentification. Vérifiez vos informations.");
+                            break;
                         }
-                        // Vérification des droits d'accès
-                        if (!compteManager.isAdmin(email)) {
-                            System.out.println("Vous n'avez pas les droits d'ajouter un particulier.");
-                            return;
-                        }
-                        ajouterPersonne(scanner);
-                        break;
+
                     case 2:
                         rechercherPersonne(scanner);
                         break;
@@ -51,16 +53,18 @@ public class MenuPrincipal {
 
                         if (compteManager.authentifier(email1, motDePasse1)) {
                             // L'utilisateur est authentifié
+                            if (!compteManager.isAdmin(email1)) {
+                            	annuaire.modifierParticulier(email1);
+                            	break;
+                            }
+                            annuaire.modifierParticulier();
+                            break;
                         } else {
                             System.out.println("Echec de l'authentification. Vérifiez vos informations.");
+                            break;
                         }
                         // Vérification des droits d'accès
-                        if (!compteManager.isAdmin(email1)) {
-                        	annuaire.modifierParticulier(email1);
-                        	break;
-                        }
-                        annuaire.modifierParticulier();
-                        break;
+
                     case 0:
                         System.out.println("Au revoir !");
                         break;
