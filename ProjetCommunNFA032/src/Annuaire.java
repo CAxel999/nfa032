@@ -312,7 +312,8 @@ public class Annuaire {
             do {
                 afficherMenuModifier();
                 choix = scanner.nextLine();
-
+                //scanner.nextLine();
+                
                 switch (choix) {
                     case "1":
                         modifierChamp(particulierAModifier, "Nom", scanner);
@@ -342,6 +343,7 @@ public class Annuaire {
                         break;
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
+                        break;
                 }
                 if (indexP != -1) {
                     this.annuaires.set(indexP, particulierAModifier);
@@ -377,7 +379,7 @@ public class Annuaire {
             do {
                 afficherMenuModifier();
                 choix = scanner.nextLine();
-
+                //scanner.nextLine();
                 switch (choix) {
                     case "1":
                         modifierChamp(particulierAModifier, "Nom", scanner);
@@ -407,11 +409,11 @@ public class Annuaire {
                         break;
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
+                        break;
                 }
                 if (indexP != -1) {
                     this.annuaires.set(indexP, particulierAModifier);
-                }
-                
+                }               
                 ecrireAnnuaire(this.annuaires);
             } while (!choix.equals("0"));
 
@@ -432,7 +434,7 @@ public class Annuaire {
 
     private void modifierChamp(Personne particulier, String nomChamp, Scanner scanner) {
         System.out.print("Nouveau " + nomChamp + " : ");
-        String nouvelleValeur = scanner.next();
+        String nouvelleValeur = scanner.nextLine();
         
         LocalDate dateMAJ = LocalDate.now();
         particulier.setDateMaj(dateMAJ.toString());
