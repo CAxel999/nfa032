@@ -64,7 +64,7 @@ public class Annuaire {
 
     void chargerAnnuaire() {
     	//annuaires = new ArrayList<>();
-
+        annuaires.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(this.FICHIER_ANNUAIRE))) {
             String ligne;
 
